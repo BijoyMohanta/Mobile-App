@@ -1,0 +1,70 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return true; // Simplified for this specific environment where we use default 'admin' ID
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128;
+    }
+
+    // Products
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if true; // Allow all for now since we're in dev and using a simulated admin
+    }
+
+    // Sales
+    match /sales/{saleId} {
+      allow read: if true;
+      allow write: if true;
+      
+      match /items/{itemId} {
+        allow read: if true;
+        allow write: if true;
+      }
+    }
+
+    // Expenses
+    match /expenses/{expenseId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Employees
+    match /employees/{employeeId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Payroll
+    match /payroll/{payrollId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // MFS Transactions
+    match /mfs_transactions/{mfsId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Settings
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if true;
+    }
+    
+    // Test connection
+    match /test/connection {
+      allow read: if true;
+    }
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "entities": {
+    "products": {
+      "title": "Products",
+      "description": "Inventory products",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "sku": { "type": "string" },
+        "barcode": { "type": "string" },
+        "purchase_price": { "type": "number" },
+        "selling_price": { "type": "number" },
+        "stock": { "type": "number" },
+        "low_stock_threshold": { "type": "number" },
+        "woo_id": { "type": "string" },
+        "category": { "type": "string" }
+      },
+      "required": ["name", "sku", "purchase_price", "selling_price", "stock"]
+    },
+    "sales": {
+      "title": "Sales",
+      "description": "Sales transactions",
+      "type": "object",
+      "properties": {
+        "invoice_no": { "type": "string" },
+        "total_amount": { "type": "number" },
+        "discount": { "type": "number" },
+        "tax": { "type": "number" },
+        "payment_method": { "type": "string" },
+        "user_id": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["invoice_no", "total_amount", "payment_method", "user_id", "created_at"]
+    },
+    "sale_items": {
+      "title": "Sale Items",
+      "description": "Items in a sale",
+      "type": "object",
+      "properties": {
+        "sale_id": { "type": "string" },
+        "product_id": { "type": "string" },
+        "quantity": { "type": "number" },
+        "price": { "type": "number" },
+        "cost": { "type": "number" },
+        "subtotal": { "type": "number" }
+      },
+      "required": ["sale_id", "product_id", "quantity", "price", "subtotal"]
+    },
+    "expenses": {
+      "title": "Expenses",
+      "description": "Business expenses",
+      "type": "object",
+      "properties": {
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "note": { "type": "string" },
+        "expense_date": { "type": "string", "format": "date" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["category", "amount", "expense_date", "created_at"]
+    },
+    "employees": {
+      "title": "Employees",
+      "description": "Staff members",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "role": { "type": "string" },
+        "salary_type": { "type": "string", "enum": ["Monthly", "Daily", "Commission"] },
+        "base_salary": { "type": "number" },
+        "commission_rate": { "type": "number" }
+      },
+      "required": ["name", "phone", "role", "salary_type", "base_salary"]
+    },
+    "payroll": {
+      "title": "Payroll",
+      "description": "Salary payments",
+      "type": "object",
+      "properties": {
+        "employee_id": { "type": "string" },
+        "month": { "type": "string" },
+        "year": { "type": "number" },
+        "base_paid": { "type": "number" },
+        "bonus": { "type": "number" },
+        "deductions": { "type": "number" },
+        "net_payable": { "type": "number" },
+        "status": { "type": "string", "enum": ["Unpaid", "Paid"] },
+        "paid_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["employee_id", "month", "year", "net_payable", "status"]
+    },
+    "mfs_transactions": {
+      "title": "MFS Transactions",
+      "description": "bKash, Nagad, Rocket transactions",
+      "type": "object",
+      "properties": {
+        "provider": { "type": "string", "enum": ["bKash", "Nagad", "Rocket"] },
+        "type": { "type": "string", "enum": ["Cash Out", "Send Money", "Cash In"] },
+        "amount": { "type": "number" },
+        "commission": { "type": "number" },
+        "transaction_id": { "type": "string" },
+        "customer_phone": { "type": "string" },
+        "user_id": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["provider", "type", "amount", "commission", "user_id", "created_at"]
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "System settings",
+      "type": "object",
+      "properties": {
+        "key": { "type": "string" },
+        "value": { "type": "any" }
+      },
+      "required": ["key", "value"]
+    }
+  },
+  "firestore": {
+    "products/{productId}": {
+      "schema": "products",
+      "description": "Product collection"
+    },
+    "sales/{saleId}": {
+      "schema": "sales",
+      "description": "Sales records"
+    },
+    "sales/{saleId}/items/{itemId}": {
+      "schema": "sale_items",
+      "description": "Items for a specific sale"
+    },
+    "expenses/{expenseId}": {
+      "schema": "expenses",
+      "description": "Expense records"
+    },
+    "employees/{employeeId}": {
+      "schema": "employees",
+      "description": "Employee profiles"
+    },
+    "payroll/{payrollId}": {
+      "schema": "payroll",
+      "description": "Payroll records"
+    },
+    "mfs_transactions/{mfsId}": {
+      "schema": "mfs_transactions",
+      "description": "MFS transaction logs"
+    },
+    "settings/{settingId}": {
+      "schema": "settings",
+      "description": "System configuration"
+    }
+  }
+}
